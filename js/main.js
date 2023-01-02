@@ -1,12 +1,10 @@
 //варианты комментариев для поста
-const descriptionOptions = [
+const DESCRIPTION_OPTIONS = [
   'сегодня отличный день', 'в кексограме очень весело', 'позанимался 2 часа', 'включила новый плейлист',
   'кошечка заснула прямо на руках', 'сегодня много заданий', 'прочитала новую книгу'];
 
-//данные которые даны в задании - в константы
-
 //количество постов в массиве
-const SIMILAR_PHOTO_POSTS_COUNT = 5;
+const SIMILAR_PHOTO_POSTS_COUNT = 25;
 
 //количество лайков
 const LIKES_COUNT = {
@@ -38,32 +36,22 @@ const getRandomArrayElement = (someArray) => {
   return someArray[getRandomNumber(0, someArray.length - 1)];
 };
 
-const createPhotoPost = (index) => {
+const createPhotoPost = (_, index) => {
   return {
     id: index,
     url: `photos/${index}.jpg`,
-    description: getRandomArrayElement(descriptionOptions),
+    description: getRandomArrayElement(DESCRIPTION_OPTIONS),
     likes: getRandomNumber(LIKES_COUNT.min, LIKES_COUNT.max),
     comments: getRandomNumber(COMMENTS_COUNT.min, COMMENTS_COUNT.max),
   };
 };
 
-//финальный массив из постов
-const getPhotoPosts = Array.from({length:  SIMILAR_PHOTO_POSTS_COUNT}, createPhotoPost);
-
-/*
-const getIndex = () => {
-  return  Array.from({length: getPhotoPosts.length}, (_, photoPostIndex) => createPhotoPost(photoPostIndex + 1));
-}; */
-
-const getIndex = () => {
-  return getPhotoPosts.map((_, photoPostIndex) => createPhotoPost(photoPostIndex + 1));
-};
+const photoPosts = Array.from({length:  SIMILAR_PHOTO_POSTS_COUNT}, (_, photoPostIndex) => createPhotoPost(_, photoPostIndex + 1));
 
 function checkStringLength (string, length) {
   return string.length <= length;
 };
 
-console.log(getIndex());
-console.log(getPhotoPosts);
+console.log(photoPosts);
+
 checkStringLength('', 140);
